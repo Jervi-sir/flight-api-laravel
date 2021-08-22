@@ -18,6 +18,7 @@ class CreateAirportsTable extends Migration
             $table->string('iataCode');
             $table->string('city');
             $table->string('state');
+
             $table->timestamps();
         });
     }

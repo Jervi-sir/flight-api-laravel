@@ -15,12 +15,14 @@ class CreateFlightsTable extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->string('flightNumer');
+            $table->string('flightNumber');
             $table->integer('arrivalAirport_id');
-            $table->datetime('arrivalDateTime');
+            $table->dateTime('arrivalDateTime');
             $table->integer('departureAirport_id');
-            $table->datetime('departureDateTime');
-            $table->integer('status');
+            $table->dateTime('departureDateTime');
+            $table->string('status');
+
+
             $table->timestamps();
         });
     }
