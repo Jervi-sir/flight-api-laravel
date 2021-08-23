@@ -11,6 +11,12 @@ class FlightService {
         'departureAirport' => 'departure',
     ];
 
+    protected $clausePropreties = [
+        'status',
+        'flightNumber'
+    ];
+
+
     public function getFlights($parameters)
     {
         if(empty($parameters))
@@ -18,23 +24,13 @@ class FlightService {
             return $this->filterFlights(Flight::all());
         }
 
-        $withKeys = [];
+        $withKeys = $this->getWithKeys($parameters);
+        $whereClauses = $this->getWhereClauses($parameters);
 
-        if(isset($parameters['include']))
-        {
-            $includeParms = explode(',', $parameters['include']);
-            $includes = array_intersect($this->supportedInlcudes, $includeParms);
-
-            $withKeys = array_keys($includes);
-        }
-
-        return $this->filterFlights(Flight::with($withKeys)->get(), $withKeys);
+        $flights = Flight::with($withKeys)->where($whereClauses)->get();
+        return $this->filterFlights($flights, $withKeys);
     }
 
-    public function getFlight($flightNumber)
-    {
-        return $this->filterFlights(Flight::where('flightNumber', $flightNumber)->get());
-    }
 
     protected function filterFlights($flights, $keys = [])
     {
@@ -73,5 +69,36 @@ class FlightService {
         }
 
         return $data;
+    }
+
+    protected function getWithKeys($parameters)
+    {
+        $withKeys = [];
+
+        if(isset($parameters['include']))
+        {
+            $includeParms = explode(',', $parameters['include']);
+            $includes = array_intersect($this->supportedInlcudes, $includeParms);
+
+            $withKeys = array_keys($includes);
+        }
+
+        return $withKeys;
+    }
+
+    protected function getWhereClauses ($parameters)
+    {
+        $clause = [];
+
+        foreach($this->clausePropreties as $prop)
+        {
+            if(in_array($prop,  array_keys($parameters)))
+            {
+                $clause[$prop] = $parameters[$prop];
+            }
+        }
+
+
+        return $clause;
     }
 }

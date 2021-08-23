@@ -53,7 +53,10 @@ class FlightController extends Controller
      */
     public function show($id)
     {
-        $data = $this->flights->getFlight($id);
+        $parameters = request()->input();
+
+        $parameters['flightNumber'] = $id;
+        $data = $this->flights->getFlights($parameters);
 
         return response()->json($data);
     }
