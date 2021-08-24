@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/v1/flights', FlightController::class);
+Route::resource('/v1/flights', FlightController::class, [
+    'except' => ['create', 'edit']
+]);
