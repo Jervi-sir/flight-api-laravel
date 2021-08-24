@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\v1\FlightService;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class FlightController extends Controller
@@ -68,7 +69,17 @@ class FlightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $flight = $this->flights->updateFlight($request, $id);
+            return response()->json($flight, 200);
+        }
+        catch(ModelNotFoundException $ex) {
+            throw $ex;
+        }
+        catch (Exception $e) {
+            return response()->json(['messagess', $e->getMessage()], 500);
+        }
+
     }
 
     /**
@@ -79,6 +90,15 @@ class FlightController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $flight = $this->flights->deleteFlight($id);
+            return response()->make('', 204);
+        }
+        catch(ModelNotFoundException $ex) {
+            throw $ex;
+        }
+        catch (Exception $e) {
+            return response()->json(['messagess', $e->getMessage()], 500);
+        }
     }
 }
