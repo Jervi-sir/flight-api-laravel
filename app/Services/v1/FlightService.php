@@ -2,8 +2,6 @@
 
 namespace App\Services\v1;
 
-use Illuminate\Support\Facades\Validator;
-
 use App\Models\Airport;
 use App\Models\Flight;
 
@@ -18,21 +16,6 @@ class FlightService {
         'status',
         'flightNumber'
     ];
-
-    protected $rules = [
-        'flightNumber' => 'required',
-        'status' => 'required|flightstatus',
-        'arrival.datetime' => 'required|date',
-        'arrival.iataCode' => 'required',
-        'departure.datetime' => 'required|date',
-        'departure.iatacode' => 'required',
-    ];
-
-    public function validate($flight)
-    {
-        $validator = Validator::make($flight, $this->rules);
-        $validator->validate();
-    }
 
 
     public function getFlights($parameters)

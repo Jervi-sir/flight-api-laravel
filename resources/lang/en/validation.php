@@ -124,10 +124,6 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
-    'flightstatus' => 'The :attribute field can only be ontime or delayed',
-
-
-
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

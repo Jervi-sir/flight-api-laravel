@@ -4,7 +4,6 @@ namespace App\Providers\v1;
 
 use App\Services\v1\FlightService;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
 
 class FlightServiceProvider extends ServiceProvider
 {
@@ -27,6 +26,6 @@ class FlightServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        //
     }
 }
